@@ -45,7 +45,7 @@ def get_plot(chromosome, start_range, end_range):
 
     fig.update_layout(
         title={
-            'text': 'Percentage of probability that a given segment of nucleotides is an enhancer',
+            'text': f'Percentage of probability that a given segment of nucleotides is an enhancer',
             'x': 0.5,
             'font': {'color': 'white'}
         },
