@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="home-titles">Methods</h1>
+    <div class="home-descr">
+        <p>
+            Below are the steps that led us to create and visualize a model predicting whether
+            a part of sequence is an enhancer, which is presented in the <a class="my-link" href="/enhancer-classification" target="_self">Classifier</a> tab.
+            <ol>
+              <li>
+                  <p><strong>Selection of subsequences</strong></p>
+                  We used a DNA sequences for each chromosome and information on where the enhancers are located in each one.
+                  Based on this, we selected subsequences of the DNA sequence and labeled whether it was an enhancer or not.
+              </li>
+              <li>
+                  <p><strong>4-mer frequency counts</strong></p>
+                  For each fragment that is enhancer or not, we counted the frequency of specific 4-mers in that sequence.
+                  We added a label indicating whether it is an enhancer or not.
+              </li>
+              <li>
+                  <p><strong>Training the model</strong></p>
+                  We trained a model that classifies enhancers based on the frequency of k-mers in a given sequence.
+                  The model we use was chosen based on the best metrics (accuracy, precision, recall) among many others that we tested.
+              </li>
+              <li>
+                  <p><strong>Calculation of the average length of the enhancer</strong></p>
+                  We calculated the average length of enhancer, taking into account all chromosomes.
+                  This length is 1500 and we rounded it up to the hundreds, which is 1500.
+              </li>
+              <li>
+                  <p><strong>Subsequences (windows) preparation</strong></p>
+                  We treat the window as a sequence of a length determined by the average calculated in the previous section.
+                  For a specific chromosome, the first window consists of indices 1-1500, the second window consists
+                  of indices 1501-3000, and so on. <br>
+                  Next, we assess the number of missing data ('N') within each window.
+                  If the number of missing data is less than 5% for a specific window, we calculate the frequencies
+                  of occurrence of 4-mers within that window. However, we exclude the 4-mers that
+                  contain 'N' from the counting process.
+                  Prediction for windows that contain more missing data is described in the next section.
+              </li>
+              <li>
+                  <p><strong>Predictions for each window</strong></p>
+                  For windows with a small amount of missing data, the model returns a percentage probability
+                  of whether it is an enhancer. The average probability of being an enhancer is then computed
+                  for each chromosome. This average value is considered as a prediction for those windows,
+                  that had more than 5% missing data.
+              </li>
+              <li>
+                <p><strong>Visualization</strong></p>
+                When a specific chromosome number is selected, the calculated predictions for each subsequent window will be shown.
+              </li>
+            </ol>
+        </p>
+    </div>
+{% endblock content %}
