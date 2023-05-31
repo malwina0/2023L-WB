@@ -23,9 +23,10 @@ from enhancer_prediction.views import (
     methods
 )
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', about),
-    path('enhancer-classification', enhancer_classification),
+    path('enhancer-classification', enhancer_classification, name='chart'),
     path('methods', methods),
 ]
