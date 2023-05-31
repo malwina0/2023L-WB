@@ -2,9 +2,115 @@
 
 {% block content %}
     <h1 class="home-titles">Enhancer classifier visualization</h1>
+
+    <form method="POST" action="{% url 'chart' %}">
+        {% csrf_token %}
+
+        <label for="chromosome">Chromosome:</label>
+        <select id="chromosome" name="chromosome">
+            <option value="chr1">chr1</option>
+            <option value="chr2">chr2</option>
+            <option value="chr1">chr3</option>
+            <option value="chr2">chr4</option>
+            <option value="chr1">chr5</option>
+            <option value="chr2">chr6</option>
+            <option value="chr1">chr7</option>
+            <option value="chr2">chr8</option>
+            <option value="chr1">chr9</option>
+            <option value="chr2">chr10</option>
+            <option value="chr1">chr11</option>
+            <option value="chr2">chr12</option>
+            <option value="chr1">chr13</option>
+            <option value="chr2">chr14</option>
+            <option value="chr1">chr15</option>
+            <option value="chr2">chr16</option>
+            <option value="chr1">chr17</option>
+            <option value="chr2">chr18</option>
+            <option value="chr1">chr19</option>
+            <option value="chr2">chr20</option>
+            <option value="chr1">chr21</option>
+            <option value="chr2">chr22</option>
+        </select>
+
+        <span id="chromosomeLength"></span>
+
+        <br>
+        <br>
+
+        <label for="start_range">Start Range:</label>
+        <input type="text" id="start_range" name="start_range">
+
+        <label for="end_range">End Range:</label>
+        <input type="text" id="end_range" name="end_range">
+
+        <br>
+        <br>
+
+        <input type="submit" value="Update Chart">
+    </form>
+
     <div class="home-descr">
-        <p>
-            TODO: plots
-        </p>
+        {{ plot_div|safe }}
     </div>
+
+
+    <script>
+    function updateChromosomeLength() {
+        var chromosomeSelect = document.getElementById('chromosome');
+        var selectedChromosomeIndex = chromosomeSelect.selectedIndex;
+
+        var lens = [146619, 143059, 116484, 112444, 106421, 100656, 93611, 86097, 83067, 79727, 79416, 78737, 67747, 63147, 60313, 53150, 47762, 45928, 34782, 37074, 28312, 30180];
+
+        var chromosomeLength = lens[selectedChromosomeIndex];
+
+        var chromosomeLengthElement = document.getElementById('chromosomeLength');
+        chromosomeLengthElement.innerText = 'Chromosome length: ' + chromosomeLength;
+    }
+
+    var chromosomeSelect = document.getElementById('chromosome');
+    chromosomeSelect.addEventListener('change', updateChromosomeLength);
+
+    function validateRange() {
+        var startRangeInput = document.getElementById('start_range');
+        var endRangeInput = document.getElementById('end_range');
+        var chromosomeSelect = document.getElementById('chromosome');
+        var selectedChromosomeIndex = chromosomeSelect.selectedIndex;
+        var lens = [146619, 143059, 116484, 112444, 106421, 100656, 93611, 86097, 83067, 79727, 79416, 78737, 67747, 63147, 60313, 53150, 47762, 45928, 34782, 37074, 28312, 30180];
+        var chromosomeLength = lens[selectedChromosomeIndex];
+
+        var startRange = parseInt(startRangeInput.value);
+        var endRange = parseInt(endRangeInput.value);
+
+        var isValid = true;
+        var errorMessage = '';
+
+        if (isNaN(startRange) || isNaN(endRange)) {
+            isValid = false;
+            errorMessage = 'Both start and end range must be numbers.';
+        } else if (startRange < 0 || endRange > chromosomeLength) {
+            isValid = false;
+            errorMessage = 'Start and end range must be within the range of 0 to ' + chromosomeLength + '.';
+        } else if (startRange > endRange) {
+            isValid = false;
+            errorMessage = 'Start range must be less than or equal to end range.';
+        }
+
+        if (!isValid) {
+            alert(errorMessage);
+            return false;
+        }
+
+        return true;
+    }
+
+
+    var updateButton = document.querySelector('input[type="submit"]');
+    updateButton.addEventListener('click', function (event) {
+        event.preventDefault();
+        if (validateRange()) {this.form.submit();}
+    });
+
+
+</script>
+
 {% endblock content %}
