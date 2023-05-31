@@ -20,7 +20,8 @@ from django.urls import path
 from enhancer_prediction.views import (
     about,
     enhancer_classification,
-    methods
+    methods,
+    download_csv
 )
 
 
@@ -29,4 +30,5 @@ urlpatterns = [
     path('', about),
     path('enhancer-classification', enhancer_classification, name='chart'),
     path('methods', methods),
+    path('download-csv', download_csv, name='download-csv'),
 ]

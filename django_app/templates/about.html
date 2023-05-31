@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
     <h1 class="home-titles">About the project</h1>
@@ -9,6 +10,10 @@
             <a class="my-link" href="https://github.com/miszalskan">Nikola Miszalska</a> and
             <a class="my-link" href="https://github.com/malwina0">Malwina Wojewoda</a>.<br>
             We are students of Data Science at the Faculty of Mathematics and Information Science of Warsaw University of Technology.
+            <div class="my-image">
+                <img src="{% static 'images/team.jpg' %}" alt="team logo">
+            </div>
+
         </p>
     </div>
 {% endblock content %}

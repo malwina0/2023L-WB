@@ -31,86 +31,84 @@
             <option value="chr1">chr21</option>
             <option value="chr2">chr22</option>
         </select>
-
+        <br>
         <span id="chromosomeLength"></span>
 
         <br>
         <br>
 
-        <label for="start_range">Start Range:</label>
-        <input type="text" id="start_range" name="start_range">
-
-        <label for="end_range">End Range:</label>
-        <input type="text" id="end_range" name="end_range">
+        <label for="start_range">Range from </label>
+        <input type="number" id="start_range" name="start_range">
+        <label for="end_range"> to </label>
+        <input type="number" id="end_range" name="end_range">
 
         <br>
         <br>
 
-        <input type="submit" value="Update Chart">
+        <input id="my-button" type="submit" value="Update chart">
+
     </form>
 
     <div class="home-descr">
         {{ plot_div|safe }}
     </div>
-
+    <br>
+    <br>
+    <a id="my-button" href="{% url 'download-csv' %}" download>Download CSV</a>
 
     <script>
-    function updateChromosomeLength() {
-        var chromosomeSelect = document.getElementById('chromosome');
-        var selectedChromosomeIndex = chromosomeSelect.selectedIndex;
-
-        var lens = [249252300,243200300,198022800,191154800,180915700,171115200,159138700,146364900,141213900,135535900,135007200,133852900,115169900,107349900,102532100,90355000,81195400,78077600,59129400,63025800,48130400,51306000];
-
-        var chromosomeLength = lens[selectedChromosomeIndex];
-
-        var chromosomeLengthElement = document.getElementById('chromosomeLength');
-        chromosomeLengthElement.innerText = 'Chromosome length: ' + chromosomeLength;
-    }
-
-    var chromosomeSelect = document.getElementById('chromosome');
-    chromosomeSelect.addEventListener('change', updateChromosomeLength);
-
-    function validateRange() {
-        var startRangeInput = document.getElementById('start_range');
-        var endRangeInput = document.getElementById('end_range');
-        var chromosomeSelect = document.getElementById('chromosome');
-        var selectedChromosomeIndex = chromosomeSelect.selectedIndex;
-        var lens = [249252300,243200300,198022800,191154800,180915700,171115200,159138700,146364900,141213900,135535900,135007200,133852900,115169900,107349900,102532100,90355000,81195400,78077600,59129400,63025800,48130400,51306000];
-        var chromosomeLength = lens[selectedChromosomeIndex];
-
-        var startRange = parseInt(startRangeInput.value);
-        var endRange = parseInt(endRangeInput.value);
-
-        var isValid = true;
-        var errorMessage = '';
-
-        if (isNaN(startRange) || isNaN(endRange)) {
-            isValid = false;
-            errorMessage = 'Both start and end range must be numbers.';
-        } else if (startRange < 0 || endRange > chromosomeLength) {
-            isValid = false;
-            errorMessage = 'Start and end range must be within the range of 0 to ' + chromosomeLength + '.';
-        } else if (startRange > endRange) {
-            isValid = false;
-            errorMessage = 'Start range must be less than or equal to end range.';
+        function updateChromosomeLength() {
+            var chromosomeSelect = document.getElementById('chromosome');
+            var selectedChromosomeIndex = chromosomeSelect.selectedIndex;
+            var lens = [249252300,243200300,198022800,191154800,180915700,171115200,159138700,146364900,141213900,135535900,135007200,133852900,115169900,107349900,102532100,90355000,81195400,78077600,59129400,63025800,48130400,51306000];
+            var chromosomeLength = lens[selectedChromosomeIndex];
+            var chromosomeLengthElement = document.getElementById('chromosomeLength');
+            chromosomeLengthElement.innerText = 'Chromosome length: ' + chromosomeLength;
         }
 
-        if (!isValid) {
-            alert(errorMessage);
-            return false;
+        var chromosomeSelect = document.getElementById('chromosome');
+        chromosomeSelect.addEventListener('change', updateChromosomeLength);
+
+        function validateRange() {
+            var startRangeInput = document.getElementById('start_range');
+            var endRangeInput = document.getElementById('end_range');
+            var chromosomeSelect = document.getElementById('chromosome');
+            var selectedChromosomeIndex = chromosomeSelect.selectedIndex;
+            var lens = [249252300,243200300,198022800,191154800,180915700,171115200,159138700,146364900,141213900,135535900,135007200,133852900,115169900,107349900,102532100,90355000,81195400,78077600,59129400,63025800,48130400,51306000];
+            var chromosomeLength = lens[selectedChromosomeIndex];
+
+            var startRange = parseInt(startRangeInput.value);
+            var endRange = parseInt(endRangeInput.value);
+
+            var isValid = true;
+            var errorMessage = '';
+
+            if (isNaN(startRange) || isNaN(endRange)) {
+                isValid = false;
+                errorMessage = 'Both start and end range must be numbers.';
+            } else if (startRange < 0 || endRange > chromosomeLength) {
+                isValid = false;
+                errorMessage = 'Start and end range must be within the range of 0 to ' + chromosomeLength + '.';
+            } else if (startRange > endRange) {
+                isValid = false;
+                errorMessage = 'Start range must be less than or equal to end range.';
+            }
+
+            if (!isValid) {
+                alert(errorMessage);
+                return false;
+            }
+
+            return true;
         }
 
-        return true;
-    }
 
+        var updateButton = document.querySelector('input[type="submit"]');
+        updateButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            if (validateRange()) {this.form.submit();}
+        });
 
-    var updateButton = document.querySelector('input[type="submit"]');
-    updateButton.addEventListener('click', function (event) {
-        event.preventDefault();
-        if (validateRange()) {this.form.submit();}
-    });
-
-
-</script>
+    </script>
 
 {% endblock content %}

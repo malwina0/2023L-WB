@@ -20,18 +20,18 @@
               <li>
                   <p><strong>Training the model</strong></p>
                   We trained a model that classifies enhancers based on the frequency of k-mers in a given sequence.
-                  The model we use was chosen based on the best metrics (accuracy, precision, recall) among many others that we tested.
+                  We used the XGBoost model and it was chosen based on the best metrics (accuracy, precision, recall) among many others that we tested.
               </li>
               <li>
                   <p><strong>Calculation of the average length of the enhancer</strong></p>
                   We calculated the average length of enhancer, taking into account all chromosomes.
-                  This length is 1500 and we rounded it up to the hundreds, which is 1500.
+                  This length is 1745 and we rounded it up to the hundreds, which is 1700.
               </li>
               <li>
                   <p><strong>Subsequences (windows) preparation</strong></p>
                   We treat the window as a sequence of a length determined by the average calculated in the previous section.
-                  For a specific chromosome, the first window consists of indices 1-1500, the second window consists
-                  of indices 1501-3000, and so on. <br>
+                  For a specific chromosome, the first window consists of indices 1-1700, the second window consists
+                  of indices 1701-3400, and so on. <br>
                   Next, we assess the number of missing data ('N') within each window.
                   If the number of missing data is less than 5% for a specific window, we calculate the frequencies
                   of occurrence of 4-mers within that window. However, we exclude the 4-mers that
