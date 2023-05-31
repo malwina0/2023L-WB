@@ -78,7 +78,7 @@ li{
 img:not(.logo){
     border: 2px solid #9c307f;
     padding: 0;
-    /*margin: 5px;*/
+    margin-top: 5px;
     object-fit: contain;
     width:  400px;
     margin-left: 300px;
@@ -89,12 +89,6 @@ img:not(.logo){
     display: grid;
     place-items: center;
     text-align: center;
-}
-
-.logo{
-    width:  auto;
-    height: 40px;
-    margin-bottom: 0;
 }
 
 .site-name{
